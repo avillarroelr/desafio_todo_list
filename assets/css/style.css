@@ -1,0 +1,93 @@
+/*----------- css General --------------*/
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+    border: 3px solid black;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 50px;
+}
+
+header {
+    text-align: left;
+    width: 100%;
+}
+
+hr {
+    width: 100%;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items:flex-start;
+}
+
+/* Seccion Ingreso de Tareas */
+.ingreso {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.cajaIngresar {
+    width: 480px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.botonAgregar {
+    height: 40px;
+    padding: 5px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+/* Seccion Renderizado de contadores y tareas */
+.renderizado {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.divContadores {
+    width: 30%;
+    margin-right: 5px;
+}
+
+.divTareas {
+    display: flex;
+    width: 65%;
+    margin-left: 5px;
+}
+
+.icons {
+    font-size: 30px;
+    color: red;
+}
+
+th {
+    text-align: left;
+    padding-right: 10px;
+}

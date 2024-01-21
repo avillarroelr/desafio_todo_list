@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafío Todo List</title>
+    <link href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;500&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="contenedor">
+        <header>
+            <h1>Todo List</h1>
+        </header>
+        <hr>
+        <main>
+            <h3>Nueva Tarea</h3>
+            <section class="ingreso">
+                <input class="cajaIngresar" id="nuevaTarea">
+                <button class="botonAgregar" id="agregarTarea">Agregar</button>
+            </section>
+            <section class="renderizado">
+                <div class="divContadores">
+                    <p>Tareas: <span id="cuenta-tareas"></span></p>
+                    <p>Realizadas: <span id="cuenta-tareas-realizadas"> </span></p>
+                </div>
+                <div class="divTareas">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tarea</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tareas"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        // Variables de Elementos Hmtl
+        const tablaDeTareas = document.querySelector("tbody")
+        const tareaInput = document.querySelector("#nuevaTarea")
+        const btnAgregar = document.querySelector("#agregarTarea")
+        const cuentaTareas = document.querySelector("#cuenta-tareas");
+        const cuentaTareasRealizadas = document.querySelector("#cuenta-tareas-realizadas");
+
+        // Array de Tareas
+        const tareas = [
+            {
+                id: 1,
+                tarea: 'Levantarse y sacar la basura',
+                estado: true,
+            },
+            {
+                id: 2,
+                tarea: 'Sacar a pasear el perro',
+                estado: false,
+            },
+            {
+                id: 3,
+                tarea: 'Ir a trabajar',
+                estado: true,
+            }
+        ]
+
+        // Renderizar Tareas verificando si esta tickeado el checkbox
+        function mostrarTareas() {
+            let html = "";
+            for (let tarea of tareas) {
+                html += `<tr>
+                            <td>${tarea.id}</td>
+                            <td>${tarea.tarea}</td>
+                            <td><input type="checkbox" ${tarea.estado ? 'checked' : ''} onchange="cambiarEstado(${tarea.id}, this.checked)"></td>
+                            <td><span onclick="borrar(${tarea.id})" class="icons mdi mdi-delete-forever"></span></td>
+                        </tr>`;
+            }
+            tablaDeTareas.innerHTML = html;
+            cuentaTareas.textContent = `${tareas.length}`;
+            cuentaTareasRealizadas.textContent = `${tareas.filter(t => t.estado).length}`;
+        }
+        mostrarTareas();
+
+        // Agregar Tareas al Array verificando que el input no este vacío   
+        btnAgregar.addEventListener("click", () => {
+            const tarea = tareaInput.value.trim();
+            if (tarea !== "") {
+                // Encontrar el máximo ID actual
+                const maxId = Math.max(...tareas.map(t => t.id), 0);
+                tareas.push({ id: maxId + 1, tarea: tarea, estado: false });
+                tareaInput.value = "";
+                mostrarTareas();
+            } else {
+                alert("Debe agregar una tarea");
+            }
+        });
+
+        // Funcion eliminar tarea preguntando si esta seguro de querer eliminarla
+        function borrar(id) {
+            const confirmacion = confirm("¿Está seguro de que desea borrar la tarea?");
+            if (confirmacion) {
+                const index = tareas.findIndex((ele) => ele.id == id)
+                tareas.splice(index, 1)
+                mostrarTareas();
+            }
+        }
+
+        // Funcion Cambiar Estado de Tarea
+        function cambiarEstado(id, nuevoEstado) {
+            const tarea = tareas.find(t => t.id == id);
+            if (tarea) {
+                tarea.estado = nuevoEstado;
+                mostrarTareas();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
